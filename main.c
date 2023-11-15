@@ -3,12 +3,19 @@
 void display_prompt(void);
 void executeing_inputed_command(const char *command);
 int toread_inputed_command(char *input_command, size_t command_size);
-/*void rwanda_printef(const char *inputedmessage, ...);*/
 int arguments(int argc, char *argv[]);
-int tokenisation();
-int parent_pid();
-int child_pid();
+int tokenisation(void);
+int parent_pid(void);
+int child_pid(void);
 
+/**
+ * main - The main function
+ *
+ * @argc: argument count
+ * @argv: argument vector
+ *
+ * Return: return 0
+ */
 int main(int argc, char *argv[])
 {
 	char command_from_user[120];
@@ -20,14 +27,17 @@ int main(int argc, char *argv[])
 		display_prompt();
 
 		/* Read the command entered by the user */
-		result = toread_inputed_command(command_from_user, sizeof(command_from_user));
+		result = toread_inputed_command(
+				command_from_user,
+				sizeof(command_from_user)
+				);
 		if (result == EOF)
 		{
 			/* Handle EOF (ctrl + D)*/
 			rwanda_printef("\n");
 			exit(EXIT_SUCCESS);
 		}
-		
+
 		/* Execute command inputed by the user */
 		executing_inputed_command(command_from_user);
 
@@ -35,7 +45,7 @@ int main(int argc, char *argv[])
 		arguments(argc, argv);
 
 		 /* Call the tokenisation function */
-        	tokenisation();
+		tokenisation();
 
 		/* process id for parent */
 		parent_pid();
@@ -46,11 +56,19 @@ int main(int argc, char *argv[])
 	return (0);
 }
 
-/* Function that dislays "$" to indicate that terminal is ready to receive input from user */
+/**
+ * display_prompt - Function to display the shell prompt
+ */
 void display_prompt(void)
 {
 	rwanda_printef("rwanda_shell\n$ ");
 }
+
+/**
+ * executing_inputed_command - Function to execute the inputted command
+ *
+ * @command: The command to be executed
+ */
 
 /* Function that executes command entered by the user */
 void executing_inputed_command(const char *command)
@@ -70,6 +88,7 @@ void executing_inputed_command(const char *command)
 		int arg_count = 0;
 
 		char *token = strtok((char *)command, " ");
+
 		while (token != NULL)
 		{
 			args[arg_count++] = token;
@@ -91,30 +110,23 @@ void executing_inputed_command(const char *command)
 	}
 }
 
-/* Function to read input from user */
+/**
+ * toread_inputed_command - Function to read the inputted command from the user
+ *
+ * @input_command: Buffer to store the input command
+ * @command_size: Size of the buffer
+ *
+ * Return: 0 on success, EOF on end of file
+ */
+
 int toread_inputed_command(char *input_command, size_t command_size)
 {
 	if (fgets(input_command, command_size, stdin) == NULL)
 	{
-		return EOF; /* End of file */
+		return (EOF); /* End of file */
 	}
 
 	/* Remove the newline character from the end of the input */
 	input_command[strcspn(input_command, "\n")] = '\0';
 	return (0);
 }
-
-/*void rwanda_printef(const char *inputedmessage, ...)
-{
-	va_list args;
-    va_start(args, inputedmessage);
-
-  */  /* Use a buffer to format the message*/
-    /*char buffer[1024];
-    vsnprintf(buffer, sizeof(buffer), inputedmessage, args);
-
-    va_end(args);
-
-    *//* Write the formatted message to STDOUT*/
-    /*write(STDOUT_FILENO, buffer, strlen(buffer));
-}*/
