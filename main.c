@@ -7,6 +7,7 @@ int arguments(int argc, char *argv[]);
 int tokenisation(void);
 int parent_pid(void);
 int child_pid(void);
+int environment(int ac, char *av[], char **env);
 
 /**
  * main - The main function
@@ -52,6 +53,9 @@ int main(int argc, char *argv[])
 
 		/* process id for child*/
 		child_pid();
+
+		/* environment function */
+		environment();
 	}
 	return (0);
 }

@@ -20,5 +20,6 @@ int arguments(int argc, char *argv[]);
 int tokenisation();
 int parent_pid();
 int child_pid();
+int environment(int ac, char *av[], char **env);
 
 #endif /* Shell_h */

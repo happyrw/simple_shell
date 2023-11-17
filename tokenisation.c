@@ -1,6 +1,13 @@
 #include "shell.h"
 
-int tokenisation()
+/**
+ * tokenisation - tokenise input
+ * @str - given input
+ * @strc - pointer to allocate memory for string
+ * @delim - to be considered during tokenisation
+ * Return: return 0
+ */
+int tokenisation(void)
 {
 	char str[] = "This is the separated word by space";
 	char *strc = malloc(sizeof(char *) * strlen(str));
@@ -12,7 +19,7 @@ int tokenisation()
 	strcpy(strc, str);
 	trunks = strtok(strc, delim);
 
-	while(trunks != NULL)
+	while (trunks != NULL)
 	{
 		rwanda_printef("Trunks: %s\n", trunks);
 		trunks = strtok(NULL, delim);
